@@ -6,17 +6,14 @@ export const metadata: Metadata = {
 
 export default function HomeLayout({
   children,
-  modal,
 }: Readonly<{ 
   children: React.ReactNode;
-  modal: React.ReactNode;
 }>) {
   return (
     <main className="min-h-screen flex flex-col">
       <div className="flex-1">
         {children}
       </div>
-      {modal}
     </main>
   );
 }
