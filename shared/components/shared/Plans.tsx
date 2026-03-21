@@ -26,6 +26,7 @@ export const Plans: React.FC<PlansProps> = ({ plans }) => {
             highlighted={plan.highlighted}
             features={plan.features}
           />
+          
         ))}
       </div>
     </Container>
