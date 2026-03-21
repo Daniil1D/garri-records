@@ -1,6 +1,6 @@
 "use client";
 
-import { FirstPage } from "./first-page/page";
+import FirstPage from "./first-page/page";
 
 
 export default function Home() {
