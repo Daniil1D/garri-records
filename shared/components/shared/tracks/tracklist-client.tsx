@@ -1,12 +1,13 @@
 "use client";
 
-import { useRef, useState } from "react";
-import axios from "axios";
-import toast from "react-hot-toast";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Prisma } from "@prisma/client";
 import { TrackForm } from "./track-form";
 import { TracklistActions } from "./tracklist-actions";
+import { UploadButton } from "@uploadthing/react";
+import type { OurFileRouter } from "@/app/api/uploadthing/route";
+import toast from "react-hot-toast";
 
 type TrackWithRelations = Prisma.TrackGetPayload<{
   include: {
@@ -21,40 +22,8 @@ interface TracklistClientProps {
 }
 
 export const TracklistClient = ({ tracks }: TracklistClientProps) => {
-  const inputRef = useRef<HTMLInputElement | null>(null);
   const router = useRouter();
   const [completedTracks, setCompletedTracks] = useState<string[]>([]);
-  const [loading, setLoading] = useState(false);
-
-  const onAddTrack = () => {
-    inputRef.current?.click();
-  };
-
-  const onFileSelect = async (fileList: FileList | null) => {
-    if (!fileList?.length) return;
-
-    const file = fileList[0];
-
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("releaseId", tracks[0]?.releaseId ?? "");
-
-    try {
-      setLoading(true);
-
-      await axios.post("/api/upload/audio", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-
-      toast.success("Трек добавлен");
-      router.refresh();
-    } catch (err) {
-      toast.error("Ошибка загрузки трека");
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleTrackCompleted = (trackId: string) => {
     setCompletedTracks((prev) => [...prev, trackId]);
@@ -76,17 +45,30 @@ export const TracklistClient = ({ tracks }: TracklistClientProps) => {
         ))}
       </div>
 
-      <input
-        ref={inputRef}
-        type="file"
-        accept=".wav,.mp3"
-        hidden
-        onChange={(e) => onFileSelect(e.target.files)}
-      />
+      <div className="mt-6 space-y-4">
 
-      <div className="mt-6 sm:mt-8">
+        <UploadButton<OurFileRouter, "audioUploader">
+          endpoint="audioUploader"
+          onClientUploadComplete={async (res) => {
+            const url = res[0].url;
+
+            await fetch("/api/tracks/upload", {
+              method: "POST",
+              body: JSON.stringify({
+                audioUrl: url,
+                releaseId: tracks[0]?.releaseId,
+              }),
+            });
+
+            toast.success("Трек загружен ✅");
+            router.refresh();
+          }}
+          onUploadError={() => {
+            toast.error("Ошибка загрузки ❌");
+          }}
+        />
+
         <TracklistActions
-          onAddTrack={onAddTrack}
           allTracksReady={allTracksReady}
         />
       </div>
