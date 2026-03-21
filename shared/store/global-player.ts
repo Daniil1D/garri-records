@@ -16,11 +16,17 @@ type PlayerState = PlayerData & {
   currentTime: number
   volume: number
 
+  isOpen: boolean
+  hasInteracted: boolean
+
   play: (data: PlayerData) => void
   toggle: () => void
   setTime: (time: number) => void
   setDuration: (time: number) => void
   setVolume: (v: number) => void
+
+  open: () => void
+  close: () => void
 }
 
 export const usePlayer = create<PlayerState>((set) => ({
@@ -35,12 +41,18 @@ export const usePlayer = create<PlayerState>((set) => ({
   currentTime: 0,
   volume: 1,
 
+  isOpen: false,
+  hasInteracted: false,
+
   play: (data) =>
-    set({
+    set((state) => ({
+      ...state,
       ...data,
       isPlaying: true,
       currentTime: 0,
-    }),
+      isOpen: true,
+      hasInteracted: true,
+    })),
 
   toggle: () =>
     set((s) => ({ isPlaying: !s.isPlaying })),
@@ -48,5 +60,8 @@ export const usePlayer = create<PlayerState>((set) => ({
   setTime: (time) => set({ currentTime: time }),
   setDuration: (d) => set({ duration: d }),
   setVolume: (v) => set({ volume: v }),
+
+  open: () => set({ isOpen: true }),
+  close: () => set({ isOpen: false }),
 }))
 

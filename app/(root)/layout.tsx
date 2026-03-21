@@ -14,7 +14,7 @@ export default function HomeLayout({
   modal: React.ReactNode;
 }>) {
   return (
-    <main className="min-h-screen flex">
+    <main className="">
       {children}
       {modal}
     </main>

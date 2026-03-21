@@ -1,5 +1,5 @@
-import { CartList } from "@/shared/components/shared/cart"
+import { CartList } from "@/shared/components/shared/cart";
 
 export async function CartServer() {
-  return <CartList />
+  return <CartList />;
 }

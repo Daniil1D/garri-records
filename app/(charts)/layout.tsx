@@ -1,6 +1,7 @@
 import { SideMenu } from '@/shared/components/shared';
 import { Metadata } from 'next';
 import { Suspense } from 'react';
+import { PlayerUI } from "@/shared/components/shared/player/player-ui";
 
 export const metadata: Metadata = {
   title: 'yourtunes-clone',
@@ -16,6 +17,7 @@ export default function CheckoutLayout({ children }: { children: React.ReactNode
       <div className="flex-1 flex justify-center">
         <div className="w-full max-w-5xl px-6">
           {children}
+          <PlayerUI />
         </div>
       </div>
     </main>

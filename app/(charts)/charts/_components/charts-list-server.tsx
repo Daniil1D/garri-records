@@ -1,4 +1,3 @@
-import { prisma } from "@/prisma/prisma-client";
 import { ChartReleaseCard } from "@/shared/components/shared/charts/chart-release-card";
 import { getTopReleases } from "@/shared/lib/get-top-releases";
 

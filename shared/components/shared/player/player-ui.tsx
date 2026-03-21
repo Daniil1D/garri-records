@@ -19,40 +19,44 @@ export const PlayerUI = () => {
     volume,
     setVolume,
     releaseId,
+    isOpen,
+    close,
   } = usePlayer()
 
   const audioRef = useRef<HTMLAudioElement>(null)
 
   useEffect(() => {
-    if (!audioRef.current) return
-
-    if (isPlaying) {
-      audioRef.current.play().catch(() => {})
-    } else {
-      audioRef.current.pause()
-    }
-  }, [isPlaying])
-
-  useEffect(() => {
     if (!audioUrl || !audioRef.current) return
 
-    audioRef.current.load()
-    audioRef.current.play().catch(() => {})
+    audioRef.current.src = audioUrl
 
     if (releaseId) {
-      axios.post("/api/play", { releaseId })
-        .catch((err) => {
-          console.error("Play tracking error:", err)
-        })
+      axios.post("/api/play", { releaseId }).catch(() => {})
     }
 
   }, [audioUrl, releaseId])
 
-  if (!audioUrl) return null
+  if (!isOpen) return null
+
+  const handlePlay = () => {
+    if (!audioRef.current) return
+    audioRef.current.play().catch(() => {})
+  }
+
+  const handlePause = () => {
+    if (!audioRef.current) return
+    audioRef.current.pause()
+  }
 
   return (
-    <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[900px]
-      bg-neutral-900 text-white rounded-2xl px-6 py-4 flex items-center gap-6 shadow-2xl">
+    <div className="fixed bottom-4 z-40 left-1/2 -translate-x-1/2 w-[900px] bg-neutral-900 text-white rounded-2xl px-6 py-4 flex items-center gap-6 shadow-2xl">
+
+      <button
+        onClick={close}
+        className="absolute top-2 right-3 text-white text-xl"
+      >
+        ✕
+      </button>
 
       <img
         src={cover ?? ""}
@@ -66,7 +70,14 @@ export const PlayerUI = () => {
 
       <div className="flex-1 flex flex-col items-center gap-1">
         <button
-          onClick={toggle}
+          onClick={() => {
+            if (isPlaying) {
+              handlePause()
+            } else {
+              handlePlay()
+            }
+            toggle()
+          }}
           className="w-10 h-10 rounded-full bg-white text-black font-bold"
         >
           {isPlaying ? "❚❚" : "▶"}
@@ -102,15 +113,10 @@ export const PlayerUI = () => {
 
       <audio
         ref={audioRef}
-        src={audioUrl}
-        onTimeUpdate={() =>
-          setTime(audioRef.current!.currentTime)
-        }
-        onLoadedMetadata={() =>
-          setDuration(audioRef.current!.duration)
-        }
+        onTimeUpdate={() => setTime(audioRef.current!.currentTime)}
+        onLoadedMetadata={() => setDuration(audioRef.current!.duration)}
+        onError={() => {}}
       />
     </div>
   )
 }
-

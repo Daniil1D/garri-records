@@ -10,7 +10,7 @@ import { signIn } from "next-auth/react";
 import { Spinner } from "../../../spinner";
 
 interface Props {
-  onClose?: VoidFunction;
+  onClose?: VoidFunction; 
 }
 
 export const LoginForm: React.FC<Props> = ({ onClose }) => {

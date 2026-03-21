@@ -14,12 +14,10 @@ export async function getTopReleases(genre?: string) {
       cover: true,
       artist: true,
         tracks: {
-            take: 1,
-            select: {
-                id: true,
-                title: true,
-                audioUrl: true,
-            },
+          take: 1,
+          include: {
+            audioFile: true,
+          },
         },
     },
     orderBy: {
@@ -36,6 +34,17 @@ export async function getTopReleases(genre?: string) {
     )
   )
 
-  return releases
+  const releasesWithAudio = releases.map(release => ({
+    ...release,
+    tracks: release.tracks.map(track => ({
+      id: track.id,
+      title: track.title,
+      audioUrl: track.audioFile?.url ?? null,
+      duration: track.duration ?? null,
+      status: track.status,
+    })),
+  }))
+
+  return releasesWithAudio
 }
 
