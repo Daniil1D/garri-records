@@ -1,5 +1,5 @@
 import { prisma } from "@/prisma/prisma-client"
-import { Plans } from "@/shared/components/shared/plans"
+import { Plans } from "@/shared/components/shared/Plans"
 
 export async function PlansServer() {
   const plans = await prisma.plan.findMany({
