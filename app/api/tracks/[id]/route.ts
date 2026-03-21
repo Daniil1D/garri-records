@@ -5,7 +5,7 @@ interface Params {
   id: string;
 }
 
-export async function PATCH(req: Request, context: { params: Params }) {
+export async function PATCH(req: Request, context: { params: Promise<{ id: string }> }) {
   const params = await context.params;
   const trackId = params.id;
 
@@ -31,7 +31,7 @@ export async function PATCH(req: Request, context: { params: Params }) {
   }
 }
 
-export async function DELETE(req: Request, context: { params: Params }) {
+export async function DELETE(req: Request, context: { params: Promise<{ id: string }> }) {
   const params = await context.params;
   const trackId = params.id;
 
