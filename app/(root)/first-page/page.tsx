@@ -8,7 +8,7 @@ import {
     Footer } from "@/shared/components/shared/first-page/index";
 
 
-export function FirstPage() {
+export default function FirstPage() {
 
     return (
         <Container>
