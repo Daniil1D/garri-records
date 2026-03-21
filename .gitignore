@@ -30,3 +30,6 @@ yarn-error.log*
 next-env.d.ts
 
 /app/generated/prisma
+
+public/uploads/audio
+public/uploads/*
