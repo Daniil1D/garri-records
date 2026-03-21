@@ -94,10 +94,10 @@ export const TrackForm: React.FC<TrackFormProps> = ({ track, onCompleted }) => {
           rules={{ required: "Введите исполнителя" }}
         />
 
-        {track.audioFile?.url && (
+        {track.audioUrl && (
           <audio
             controls
-            src={track.audioFile.url}
+            src={track.audioUrl}
             className="w-full rounded-lg"
           />
         )}
