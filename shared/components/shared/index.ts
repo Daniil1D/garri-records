@@ -6,7 +6,6 @@ export { ClearButton } from "./clear-button";
 export { ReguiredSymbol } from './required-symbol'
 export { ErrorText } from './error-text'
 export { InfoBlock } from './info-block'
-export { Plans } from './plans';
 export { PlanCard } from './plan-card'
 export { Spinner } from './spinner'
 
