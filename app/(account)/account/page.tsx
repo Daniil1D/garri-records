@@ -15,7 +15,9 @@ import { PaymentSuccessToast } from "./_components/payment-success-toast";
 export default function ProfilePage() {
   return (
     <>
-    <PaymentSuccessToast />
+      <Suspense fallback={null}>
+        <PaymentSuccessToast />
+      </Suspense>
     
       <div className="space-y-6 sm:space-y-8 lg:space-y-10">
         
