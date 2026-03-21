@@ -10,10 +10,10 @@ export function BalanceActions() {
   const [openWithdraw, setOpenWithdraw] = useState(false);
 
   return (
-    <div className="flex gap-4">
+    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
       <Button
         variant="secondary"
-        className="rounded-2xl px-6 h-12"
+        className="w-full sm:w-auto rounded-2xl px-6 h-11 sm:h-12"
         onClick={() => setOpenTopUp(true)}
       >
         + Пополнить
@@ -21,7 +21,7 @@ export function BalanceActions() {
 
       <Button
         variant="secondary"
-        className="rounded-2xl px-6 h-12"
+        className="w-full sm:w-auto rounded-2xl px-6 h-11 sm:h-12"
         onClick={() => setOpenWithdraw(true)}
       >
         ↑ Вывести

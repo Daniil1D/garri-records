@@ -1,3 +1,5 @@
+// 📁 shared/components/.../ReleaseDetailsServer.tsx
+
 import { prisma } from "@/prisma/prisma-client";
 import { Container, Title } from "@/shared/components/shared";
 
@@ -40,9 +42,12 @@ export async function ReleaseDetailsServer({ releaseId }: Props) {
   const coverUrl = release.cover?.url ?? null;
 
   return (
-    <>
-      <div className="flex items-center gap-6">
-        <div className="w-24 h-24 rounded-xl bg-gray-100 flex items-center justify-center overflow-hidden">
+    <div className="space-y-8 sm:space-y-10">
+      
+      <div
+        className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
+
+        <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl bg-gray-100 flex items-center justify-center overflow-hidden">
           {coverUrl ? (
             <img
               src={coverUrl}
@@ -56,14 +61,16 @@ export async function ReleaseDetailsServer({ releaseId }: Props) {
           )}
         </div>
 
-        <div>
+        <div className="min-w-0">
           <span className="inline-block text-xs px-2 py-1 rounded-full bg-gray-100 mb-1">
             {statusMap[release.status]}
           </span>
 
-          <h1 className="text-2xl font-bold">{release.title}</h1>
+          <h1 className="text-xl sm:text-2xl font-bold break-words">
+            {release.title}
+          </h1>
 
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-gray-500 break-words">
             {release.artist.name}
             {release.label ? ` • ${release.label.name}` : ""}
           </p>
@@ -72,16 +79,27 @@ export async function ReleaseDetailsServer({ releaseId }: Props) {
 
       <div>
         <Title text="Треки" size="xl" />
+
         <ul className="space-y-2">
           {release.tracks.map((track) => (
             <li
               key={track.id}
-              className="flex justify-between items-center p-3 border rounded-xl"
+              className="
+                flex 
+                flex-col sm:flex-row  
+                gap-2 sm:gap-0
+                justify-between 
+                items-start sm:items-center
+                p-3 border rounded-xl
+              "
             >
-              <span>
+              <span className="break-words">
                 {track.artists.map((a) => a.name).join(", ")} — {track.title}
               </span>
-              <span className="text-gray-400">{track.duration}s</span>
+
+              <span className="text-gray-400 text-sm shrink-0">
+                {track.duration}s
+              </span>
             </li>
           ))}
         </ul>
@@ -89,17 +107,17 @@ export async function ReleaseDetailsServer({ releaseId }: Props) {
 
       <div>
         <Title text="Площадки" size="xl" />
-        <div className="flex flex-wrap gap-3">
+
+        <div className="flex flex-wrap gap-2 sm:gap-3">
           {release.platforms.map((rp) => (
             <span
               key={rp.platformId}
-              className="flex items-center gap-2 border rounded-xl px-3 py-1 bg-white"
-            >
+              className="flex items-center gap-2 border rounded-xl px-2 sm:px-3 py-1 bg-white text-xs sm:text-sm">
               {rp.platform.logo && (
                 <img
                   src={rp.platform.logo}
                   alt={rp.platform.name}
-                  className="w-6 h-6"
+                  className="w-4 h-4 sm:w-6 sm:h-6"
                 />
               )}
               {rp.platform.name}
@@ -107,7 +125,6 @@ export async function ReleaseDetailsServer({ releaseId }: Props) {
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 }
-

@@ -7,7 +7,11 @@ export default async function StatisticsPage() {
   const user = await getUserSession();
 
   if (!user) {
-    return <Title text="Вы не авторизованы" size="2xl" className="font-bold" />;
+    return (
+      <Container className="mt-10 px-4 sm:px-6">
+        <Title text="Вы не авторизованы" size="2xl" className="font-bold" />
+      </Container>
+    );
   }
 
   const activeSubscription = await prisma.subscription.findFirst({
@@ -21,7 +25,7 @@ export default async function StatisticsPage() {
   const hasSubscription = Boolean(activeSubscription);
 
   return (
-    <Container className="space-y-10 mt-10">
+    <Container className="space-y-8 sm:space-y-10 mt-8 sm:mt-10 px-4 sm:px-6">
       <StaticsClient hasSubscription={hasSubscription} />
     </Container>
   );

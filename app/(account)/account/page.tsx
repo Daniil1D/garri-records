@@ -17,7 +17,7 @@ export default function ProfilePage() {
     <>
     <PaymentSuccessToast />
     
-      <div className="space-y-10">
+      <div className="space-y-6 sm:space-y-8 lg:space-y-10">
         
         <Suspense fallback={<ProfileFormSkeleton />}>
           <ProfileFormServer />

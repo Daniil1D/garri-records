@@ -13,12 +13,17 @@ export const CartList: React.FC = () => {
     fetchCartItems();
   }, [fetchCartItems]);
 
-  if (!items.length) return <p>Корзина пуста</p>;
+  if (!items.length)
+    return (
+      <Container className="my-6 sm:my-10">
+        <p className="text-center text-gray-500">Корзина пуста</p>
+      </Container>
+    );
 
   return (
-    <Container className="my-10">
-      <div className="border rounded-2xl bg-white p-6 space-y-4">
-        <h3 className="font-bold text-lg">Корзина</h3>
+    <Container className="my-6 sm:my-10">
+      <div className="border rounded-2xl bg-white p-4 sm:p-6 space-y-4">
+        <h3 className="font-bold text-base sm:text-lg">Корзина</h3>
 
         <div className="space-y-3">
           {items.map((item) => (
@@ -30,14 +35,13 @@ export const CartList: React.FC = () => {
           ))}
         </div>
 
-        <div className="flex justify-between items-center border-t pt-4 mt-4">
-          <span className="text-lg font-bold">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 border-t pt-4 mt-4">
+          <span className="text-base sm:text-lg font-bold">
             Итого: {totalAmount} ₽
           </span>
           <CheckoutButton />
         </div>
       </div>
     </Container>
-   
   );
 };

@@ -19,16 +19,16 @@ export const TracklistActions: React.FC<TracklistActionsProps> = ({
   const releaseId = params.id;
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-3 sm:gap-4">
       <Button
-        className="w-full h-14 rounded-xl border text-lg"
+        className="w-full h-12 sm:h-14 rounded-xl border text-sm sm:text-base md:text-lg"
         onClick={onAddTrack}
       >
         + Ещё один трек
       </Button>
 
       <Button
-        className="w-full h-14 rounded-xl border text-lg"
+        className="w-full h-12 sm:h-14 rounded-xl border text-sm sm:text-base md:text-lg"
         disabled={!allTracksReady}
         onClick={() =>
           router.push(`/releases/${releaseId}/information-releases`)
@@ -39,7 +39,7 @@ export const TracklistActions: React.FC<TracklistActionsProps> = ({
 
       <Button
         variant="outline"
-        className="text-sm text-gray-500"
+        className="text-xs sm:text-sm text-gray-500"
         onClick={() => history.back()}
       >
         ← Назад

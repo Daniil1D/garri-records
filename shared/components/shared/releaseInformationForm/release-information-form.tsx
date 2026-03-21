@@ -6,7 +6,6 @@ import { Button } from "@/shared/components/ui/button";
 import { saveReleaseInformation } from "@/app/actions/index";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { useReleaseStore } from "@/shared/store/release-store";
 import { ReleaseCoverUpload } from "./release-cover-upload";
 import { ReleaseMainFields } from "./release-main-fields";
 import { ReleaseCopyrightForm } from "./release-copyright-form";
@@ -48,7 +47,6 @@ export const ReleaseInformationForm: React.FC<Props> = ({
   });
 
   const {
-    handleSubmit,
     formState: { isValid, isSubmitting },
   } = methods;
 
@@ -65,24 +63,38 @@ export const ReleaseInformationForm: React.FC<Props> = ({
   };
 
   return (
-     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-10">
-        <div className="rounded-3xl border bg-white shadow-sm p-8">
-          <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-10">
-            <ReleaseCoverUpload releaseId={releaseId}/>
-            <ReleaseMainFields release={release}/>
+    <FormProvider {...methods}>
+      <form
+        onSubmit={methods.handleSubmit(onSubmit)}
+        className="space-y-6 sm:space-y-8 md:space-y-10"
+      >
+        <div
+          className="rounded-3xl border bg-white shadow-sm 
+          p-4 sm:p-6 md:p-8"
+        >
+          <div
+            className="
+            grid 
+            grid-cols-1 
+            md:grid-cols-[220px_1fr] 
+            lg:grid-cols-[280px_1fr] 
+            gap-6 sm:gap-8 md:gap-10
+          "
+          >
+            <ReleaseCoverUpload releaseId={releaseId} />
+            <ReleaseMainFields release={release} />
           </div>
         </div>
 
         <ReleaseCopyrightForm />
 
-        <ReleaseArtistsForm release={release}/>
+        <ReleaseArtistsForm release={release} />
 
         <ReleasePublishDateForm />
 
         <Button
           type="submit"
-          className="w-full h-14 text-lg rounded-xl"
+          className="w-full h-12 sm:h-14 text-sm sm:text-base md:text-lg rounded-xl"
           disabled={!isValid || isSubmitting}
         >
           Сохранить информацию
@@ -91,4 +103,3 @@ export const ReleaseInformationForm: React.FC<Props> = ({
     </FormProvider>
   );
 };
-

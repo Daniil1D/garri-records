@@ -40,26 +40,28 @@ export const WithdrawDialog = ({ open, setOpen }: Props) => {
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogContent className="max-w-xl rounded-3xl p-10">
+      <AlertDialogContent className="w-[92vw] sm:max-w-lg rounded-3xl p-5 sm:p-8 lg:p-10">
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-3xl font-bold">
+          <AlertDialogTitle className="text-2xl sm:text-3xl font-bold">
             Вывести средства
           </AlertDialogTitle>
         </AlertDialogHeader>
 
         <div className="mt-6 space-y-2">
-          <p className="font-medium">Сумма вывода</p>
+          <p className="font-medium text-sm sm:text-base">
+            Сумма вывода
+          </p>
 
           <Input
             placeholder="Введите сумму ₽"
-            className="h-14 text-lg rounded-2xl"
+            className="h-12 sm:h-14 text-base sm:text-lg rounded-2xl"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
           />
         </div>
 
         <Button
-          className="mt-8 h-14 rounded-2xl text-lg w-full"
+          className="mt-6 sm:mt-8 h-12 sm:h-14 rounded-2xl text-base sm:text-lg w-full"
           onClick={onSubmit}
         >
           Вывести
@@ -67,4 +69,4 @@ export const WithdrawDialog = ({ open, setOpen }: Props) => {
       </AlertDialogContent>
     </AlertDialog>
   );
-}
+};

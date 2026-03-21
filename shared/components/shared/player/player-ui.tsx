@@ -49,40 +49,67 @@ export const PlayerUI = () => {
   }
 
   return (
-    <div className="fixed bottom-4 z-40 left-1/2 -translate-x-1/2 w-[900px] bg-neutral-900 text-white rounded-2xl px-6 py-4 flex items-center gap-6 shadow-2xl">
+    <div
+      className="
+        fixed bottom-0 left-0 w-full z-50
+        bg-neutral-900 text-white
+        border-t border-neutral-800
+      "
+    >
+      <div className="max-w-6xl mx-auto px-3 sm:px-6 py-3 flex items-center gap-3 sm:gap-6">
 
-      <button
-        onClick={close}
-        className="absolute top-2 right-3 text-white text-xl"
-      >
-        ✕
-      </button>
-
-      <img
-        src={cover ?? ""}
-        className="w-14 h-14 rounded-lg object-cover"
-      />
-
-      <div className="w-56">
-        <div className="font-semibold">{title}</div>
-        <div className="text-sm text-neutral-400">{artist}</div>
-      </div>
-
-      <div className="flex-1 flex flex-col items-center gap-1">
         <button
-          onClick={() => {
-            if (isPlaying) {
-              handlePause()
-            } else {
-              handlePlay()
-            }
-            toggle()
-          }}
-          className="w-10 h-10 rounded-full bg-white text-black font-bold"
+          onClick={close}
+          className="absolute top-2 right-3 text-white text-lg"
         >
-          {isPlaying ? "❚❚" : "▶"}
+          ✕
         </button>
 
+        <img
+          src={cover ?? ""}
+          className="w-10 h-10 sm:w-14 sm:h-14 rounded-lg object-cover"
+        />
+
+        <div className="flex-1 min-w-0">
+          <div className="font-semibold text-sm sm:text-base truncate">
+            {title}
+          </div>
+          <div className="text-xs sm:text-sm text-neutral-400 truncate">
+            {artist}
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2 sm:gap-4">
+
+          <button
+            onClick={() => {
+              if (isPlaying) handlePause()
+              else handlePlay()
+              toggle()
+            }}
+            className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white text-black font-bold"
+          >
+            {isPlaying ? "❚❚" : "▶"}
+          </button>
+
+        </div>
+
+        <input
+          type="range"
+          min={0}
+          max={1}
+          step={0.01}
+          value={volume}
+          onChange={(e) => {
+            const v = Number(e.target.value)
+            if (audioRef.current) audioRef.current.volume = v
+            setVolume(v)
+          }}
+          className="hidden sm:block w-24"
+        />
+      </div>
+
+      <div className="px-3 sm:px-6 pb-2">
         <input
           type="range"
           min={0}
@@ -96,20 +123,6 @@ export const PlayerUI = () => {
           className="w-full"
         />
       </div>
-
-      <input
-        type="range"
-        min={0}
-        max={1}
-        step={0.01}
-        value={volume}
-        onChange={(e) => {
-          const v = Number(e.target.value)
-          if (audioRef.current) audioRef.current.volume = v
-          setVolume(v)
-        }}
-        className="w-24"
-      />
 
       <audio
         ref={audioRef}

@@ -13,9 +13,9 @@ export const ReleasePublishDateForm = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="relative rounded-3xl border bg-white shadow-sm p-8 space-y-4">
+    <div className="relative rounded-3xl border bg-white shadow-sm p-4 sm:p-6 md:p-8  space-y-4">
       <div className="space-y-1">
-        <h2 className="text-lg font-semibold">Дата публикации</h2>
+        <h2 className="text-base sm:text-lg md:text-xl font-semibold">Дата публикации</h2>
         <p className="text-sm text-gray-500">Выберите дату</p>
       </div>
 

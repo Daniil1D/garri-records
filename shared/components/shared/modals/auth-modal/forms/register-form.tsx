@@ -82,7 +82,7 @@ export const RegisterForm: React.FC<Props> = ({ onClose }) => {
   return (
     <FormProvider {...form}>
       <form
-        className="flex flex-col gap-5"
+        className="flex flex-col gap-4 sm:gap-5"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormInput name="email" label="E-Mail" required />
@@ -95,7 +95,7 @@ export const RegisterForm: React.FC<Props> = ({ onClose }) => {
           required
         />
 
-        <div className="flex flex-col gap-3 text-sm text-gray-600">
+        <div className="flex flex-col gap-2 sm:gap-3 text-xs sm:text-sm text-gray-600">
 
           <div className="flex items-start gap-2">
             <input
@@ -227,7 +227,7 @@ export const RegisterForm: React.FC<Props> = ({ onClose }) => {
           </div>
         </div>
 
-        <Button className="h-12 text-base" type="submit" disabled={loading}>
+        <Button className="h-11 sm:h-12 text-sm sm:text-base" type="submit" disabled={loading}>
           {loading && <Spinner />}
           {loading ? "Создаём аккаунт…" : "Зарегистрироваться"}
         </Button>

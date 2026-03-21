@@ -34,19 +34,21 @@ export function Login() {
   }
 
   return (
-    <div className="min-h-screen flex mx-auto items-center justify-center">
-      <div className="w-full max-w-xl p-6 border rounded-xl shadow-md bg-white">
+    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6">
+      <div
+        className="w-full max-w-md sm:max-w-lg md:max-w-xl 
+        p-4 sm:p-6 
+        border rounded-xl shadow-md bg-white"
+      >
         {showLogin ? (
-          <div>
-            <LoginForm />
-          </div>
+          <LoginForm />
         ) : (
-          <div className="w-[300px]">
+          <div className="w-full">
             <RegisterForm onClickLogin={() => setShowLogin(true)} />
           </div>
         )}
 
-        <div className="mt-4 text-center">
+        <div className="mt-4 text-center text-sm sm:text-base">
           {showLogin ? (
             <p>
               Нет аккаунта?{" "}

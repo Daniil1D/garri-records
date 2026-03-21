@@ -13,7 +13,7 @@ export const ReleaseMainFields = ({ release }: Props) => {
       <div className="space-y-2">
         <h3 className="font-medium">Название релиза</h3>
 
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-gray-500"> 
           Название автоматически берётся из первого трека
         </p>
 

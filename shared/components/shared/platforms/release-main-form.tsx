@@ -5,7 +5,6 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { Prisma } from "@prisma/client";
 
-
 import { PlatformsDropdown } from "./platforms-dropdown";
 import { Button } from "@/shared/components/ui/button";
 import { useRouter } from "next/navigation";
@@ -46,7 +45,7 @@ export const ReleaseMainForm = ({ id, release, platforms }: Props) => {
   const methods = useForm<FormValues>({
     mode: "onChange",
     defaultValues: {
-      title:"",
+      title: "",
       artistName: "",
       platformIds: selectedPlatformIds,
     },
@@ -76,14 +75,20 @@ export const ReleaseMainForm = ({ id, release, platforms }: Props) => {
 
   return (
     <FormProvider {...methods}>
-      <form className="bg-white border rounded-2xl shadow-sm p-6 space-y-6">
-        <h2 className="text-lg font-bold">Основная информация</h2>
+      <form
+        className="bg-white border rounded-2xl shadow-sm 
+        p-4 sm:p-5 md:p-6 
+        space-y-4 sm:space-y-5 md:space-y-6"
+      >
+        <h2 className="text-base sm:text-lg md:text-xl font-bold">
+          Основная информация
+        </h2>
 
         <PlatformsDropdown platforms={platforms} name="platformIds" />
 
         <Button
           type="button"
-          className="w-full text-lg py-6 rounded-xl"
+          className="w-full text-sm sm:text-base md:text-lg py-4 sm:py-5 md:py-6 rounded-xl"
           disabled={!isValid}
           onClick={onNext}
         >

@@ -28,13 +28,14 @@ export const CheckoutButton: React.FC = () => {
       onClick={onCheckout}
       disabled={loading}
       className="
-        flex items-center gap-2
+        flex items-center justify-center gap-2
+        w-full sm:w-auto
         bg-black text-white
         hover:bg-neutral-800
         transition-all
-        px-6 py-3
+        px-4 sm:px-6 py-3
         rounded-xl
-        text-sm font-semibold
+        text-sm sm:text-base font-semibold
       "
     >
       {loading ? (

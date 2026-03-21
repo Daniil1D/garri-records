@@ -23,8 +23,14 @@ export default async function InformationReleasePage({ params }: PageProps) {
   });
 
   return (
-    <Container className="mt-10 space-y-8">
-      <Title text="Информация о релизе" size="xl" />
+    <Container
+      className="mt-4 sm:mt-6 md:mt-10 space-y-6 sm:space-y-8 px-4 sm:px-6 md:px-0"
+    >
+      <Title
+        text="Информация о релизе"
+        size="xl"
+        className="text-lg sm:text-xl md:text-2xl"
+      />
 
       <ReleaseInformationForm
         releaseId={releaseId}
@@ -33,4 +39,3 @@ export default async function InformationReleasePage({ params }: PageProps) {
     </Container>
   );
 }
-

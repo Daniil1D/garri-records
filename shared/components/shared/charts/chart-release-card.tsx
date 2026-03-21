@@ -26,9 +26,9 @@ export const ChartReleaseCard: React.FC<Props> = ({
   const { play } = usePlayer()
 
   return (
-    <div className="flex items-center gap-5 border rounded-2xl p-4 bg-white hover:shadow transition">
+    <div className="flex items-center gap-3 sm:gap-5 border rounded-2xl p-3 sm:p-4 bg-white hover:shadow transition">
 
-      <div className="text-2xl font-bold w-10 text-gray-400">
+      <div className="text-lg sm:text-2xl font-bold w-8 sm:w-10 text-gray-400">
         {index}
       </div>
 
@@ -42,7 +42,7 @@ export const ChartReleaseCard: React.FC<Props> = ({
             releaseId,
           })
         }
-        className="w-16 h-16 rounded-lg bg-gray-100 overflow-hidden cursor-pointer hover:scale-105 transition"
+        className="w-14 h-14 sm:w-16 sm:h-16 rounded-lg bg-gray-100 overflow-hidden cursor-pointer hover:scale-105 transition"
       >
         {coverUrl ? (
           <img src={coverUrl} className="w-full h-full object-cover" />
@@ -51,12 +51,12 @@ export const ChartReleaseCard: React.FC<Props> = ({
         )}
       </div>
 
-      <div className="flex-1">
-        <div className="font-semibold">{title}</div>
-        <div className="text-sm text-gray-500">{artist}</div>
+      <div className="flex-1 min-w-0">
+        <div className="font-semibold truncate">{title}</div>
+        <div className="text-xs sm:text-sm text-gray-500 truncate">{artist}</div>
       </div>
 
-      <div className="text-sm text-gray-400">
+      <div className="text-xs sm:text-sm text-gray-400 whitespace-nowrap">
         {tracksCount} треков
       </div>
     </div>

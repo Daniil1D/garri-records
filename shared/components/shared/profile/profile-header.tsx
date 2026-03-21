@@ -49,11 +49,12 @@ export const ProfileHeader = ({ user, isEditing, setIsEditing }: Props) => {
   };
 
   return (
-    <div className="rounded-3xl bg-white shadow-sm p-8 flex items-center justify-between">
-      <div className="flex items-center gap-6">
+    <div className="rounded-3xl bg-white shadow-sm p-4 sm:p-6 lg:p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+      
+      <div className="flex items-center gap-4 sm:gap-6">
         <div
           onClick={onClickAvatar}
-          className={`relative w-24 h-24 rounded-2xl overflow-hidden border cursor-pointer group ${
+          className={`relative w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-2xl overflow-hidden border cursor-pointer group ${
             !isEditing && "cursor-default"
           }`}
         >
@@ -64,13 +65,15 @@ export const ProfileHeader = ({ user, isEditing, setIsEditing }: Props) => {
               className="w-full h-full object-cover"
             />
           ) : (
-            <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500 text-xl font-bold">
+            <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500 text-lg sm:text-xl font-bold">
               {user.fullName[0]}
             </div>
           )}
 
           {isEditing && (
-            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-sm font-medium"></div>
+            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs sm:text-sm font-medium">
+              Изменить
+            </div>
           )}
         </div>
 
@@ -83,16 +86,20 @@ export const ProfileHeader = ({ user, isEditing, setIsEditing }: Props) => {
         />
 
         <div>
-          <h2 className="text-3xl font-bold">{user.fullName}</h2>
-          <p className="text-gray-500 text-sm">{user.email}</p>
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold">
+            {user.fullName}
+          </h2>
+          <p className="text-gray-500 text-xs sm:text-sm break-all">
+            {user.email}
+          </p>
         </div>
       </div>
 
-      <div>
+      <div className="w-full sm:w-auto">
         {!isEditing ? (
           <Button
             onClick={() => setIsEditing(true)}
-            className="rounded-2xl px-6"
+            className="w-full sm:w-auto rounded-2xl px-6"
           >
             Редактировать
           </Button>
@@ -100,7 +107,7 @@ export const ProfileHeader = ({ user, isEditing, setIsEditing }: Props) => {
           <Button
             variant="secondary"
             onClick={() => setIsEditing(false)}
-            className="rounded-2xl px-6"
+            className="w-full sm:w-auto rounded-2xl px-6"
           >
             Отмена редактирования
           </Button>
@@ -108,4 +115,4 @@ export const ProfileHeader = ({ user, isEditing, setIsEditing }: Props) => {
       </div>
     </div>
   );
-}
+};

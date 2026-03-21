@@ -20,15 +20,18 @@ export const CartCard: React.FC<Props> = ({ item, onRemove }) => {
   };
 
   return (
-   <div className="flex items-center justify-between border rounded-xl p-4 bg-neutral-50">
+    <div className="flex flex-col sm:flex-row sm:items-center justify-between border rounded-xl p-4 bg-neutral-50 gap-3">
+      
       <div>
-        <p className="font-semibold">{item.name}</p>
-        <p className="text-sm text-gray-500">
+        <p className="font-semibold text-sm sm:text-base">
+          {item.name}
+        </p>
+        <p className="text-xs sm:text-sm text-gray-500">
           {item.price} ₽ / шт
         </p>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center justify-end">
         <Button
           variant="ghost"
           size="icon"

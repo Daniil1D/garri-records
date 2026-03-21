@@ -55,9 +55,9 @@ export function ProfileEditForm({ user, setIsEditing }: Props) {
     <FormProvider {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className=" profile-form mt-10 p-10  bg-white rounded-xl  shadow-sm"
+        className="mt-6 sm:mt-10 p-4 sm:p-6 lg:p-10 bg-white rounded-xl shadow-sm"
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           <FormInput name="email" label="E-Mail" required />
           <FormInput name="fullName" label="Имя" required />
 
@@ -75,10 +75,10 @@ export function ProfileEditForm({ user, setIsEditing }: Props) {
           />
         </div>
 
-        <div className="profile-form__actions flex justify-center gap-4 mt-10">
+        <div className="flex flex-col sm:flex-row justify-center gap-4 mt-8 sm:mt-10">
           <Button
             disabled={form.formState.isSubmitting}
-            className="text-base min-w-[180px]"
+            className="text-base w-full sm:min-w-[180px]"
             type="submit"
           >
             Сохранить
@@ -88,7 +88,7 @@ export function ProfileEditForm({ user, setIsEditing }: Props) {
             onClick={onClickSignOut}
             variant="secondary"
             disabled={form.formState.isSubmitting}
-            className="text-base min-w-[180px]"
+            className="text-base w-full sm:min-w-[180px]"
             type="button"
           >
             Выйти

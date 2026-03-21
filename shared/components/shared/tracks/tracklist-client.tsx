@@ -65,9 +65,14 @@ export const TracklistClient = ({ tracks }: TracklistClientProps) => {
 
   return (
     <>
-      <div className="space-y-6">
+      <div
+        className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
         {tracks.map((track) => (
-          <TrackForm key={track.id} track={track} onCompleted={() => handleTrackCompleted(track.id)}/>
+          <TrackForm
+            key={track.id}
+            track={track}
+            onCompleted={() => handleTrackCompleted(track.id)}
+          />
         ))}
       </div>
 
@@ -79,7 +84,12 @@ export const TracklistClient = ({ tracks }: TracklistClientProps) => {
         onChange={(e) => onFileSelect(e.target.files)}
       />
 
-      <TracklistActions onAddTrack={onAddTrack} allTracksReady={allTracksReady} />
+      <div className="mt-6 sm:mt-8">
+        <TracklistActions
+          onAddTrack={onAddTrack}
+          allTracksReady={allTracksReady}
+        />
+      </div>
     </>
   );
 };

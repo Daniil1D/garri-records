@@ -16,7 +16,6 @@ export const ReleasesHeader = () => {
 
   const router = useRouter();
   const searchParams = useSearchParams();
-
   const resetRelease = useReleaseStore((s) => s.resetRelease);
 
   React.useEffect(() => {
@@ -56,8 +55,8 @@ export const ReleasesHeader = () => {
     <div className="space-y-4">
       <Title text="Мои релизы" size="2xl" className="font-bold" />
 
-      <div className="flex items-center gap-4 bg-white h-[50px] border rounded-2xl px-5">
-        <div className="relative w-full max-w-md">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 bg-white border rounded-2xl px-4 sm:px-5 py-3 sm:py-0 sm:h-[50px]">
+        <div className="relative w-full sm:max-w-md">
           <Input
             placeholder="Поиск релиза..."
             className="pl-10"
@@ -76,16 +75,15 @@ export const ReleasesHeader = () => {
         disabled={loading}
         className="
           w-full border-2 border-dashed rounded-2xl
-          py-10 flex items-center justify-center gap-3
-          text-xl font-semibold text-gray-600
+          py-6 sm:py-10 flex items-center justify-center gap-3
+          text-base sm:text-xl font-semibold text-gray-600
           hover:border-black hover:text-black
           transition
         "
       >
-        {loading ? <Spinner /> : <Plus className="w-6 h-6" />}
+        {loading ? <Spinner /> : <Plus className="w-5 h-5 sm:w-6 sm:h-6" />}
         {loading ? "Создаём релиз…" : "Новый релиз"}
       </button>
     </div>
   );
 };
-

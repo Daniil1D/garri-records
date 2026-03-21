@@ -12,13 +12,15 @@ export default function CheckoutLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="min-h-screen flex">
-      <Suspense>
-        <SideMenu />
-      </Suspense>
+    <main className="min-h-screen flex flex-col lg:flex-row">
+        <Suspense>
+          <SideMenu />
+        </Suspense>
 
       <div className="flex-1 flex justify-center">
-        <div className="w-full max-w-5xl px-6">{children}</div>
+        <div className="w-full max-w-5xl px-4 sm:px-6 lg:px-8">
+          {children}
+        </div>
       </div>
     </main>
   );

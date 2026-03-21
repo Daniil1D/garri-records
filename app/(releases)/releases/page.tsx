@@ -12,8 +12,7 @@ export default async function ReleasesPage({ searchParams }: PageProps) {
   const { q } = await searchParams;
 
   return (
-    <Container className="space-y-10 mt-10">
-
+    <Container className="space-y-6 sm:space-y-8 lg:space-y-10 mt-6 sm:mt-10">
       <ReleasesHeader />
 
       <Suspense fallback={<ReleasesSkeleton />} key={q}>

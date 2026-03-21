@@ -11,10 +11,10 @@ interface PlansProps {
 
 export const Plans: React.FC<PlansProps> = ({ plans }) => {
   return (
-    <Container className="my-10">
-      <Title text="Выберите тариф" size="md" className="font-bold mb-8" />
+    <Container className="my-6 sm:my-8 lg:my-10">
+      <Title text="Выберите тариф" size="md" className="font-bold mb-6 sm:mb-8" />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
         {plans.map(plan => (
           <PlanCard
             key={plan.id}

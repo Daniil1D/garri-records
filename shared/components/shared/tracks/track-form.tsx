@@ -81,8 +81,7 @@ export const TrackForm: React.FC<TrackFormProps> = ({ track, onCompleted }) => {
     <FormProvider {...methods}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-white border rounded-2xl p-6 space-y-6"
-      >
+        className=" bg-white border rounded-2xl p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5 md:space-y-6">
         <FormInput
           name="title"
           placeholder="Название трека"

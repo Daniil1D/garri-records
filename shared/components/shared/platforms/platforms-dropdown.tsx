@@ -26,10 +26,16 @@ export const PlatformsDropdown = ({ platforms, name }: Props) => {
   };
 
   return (
-    <div className="border rounded-xl p-4 space-y-3 bg-gray-50">
-      <h3 className="font-semibold">Площадки релиза</h3>
+    <div
+      className="border rounded-xl p-3 sm:p-4 space-y-2 sm:space-y-3 bg-gray-50"
+    >
+      <h3 className="font-semibold text-sm sm:text-base">
+        Площадки релиза
+      </h3>
 
-      <div className="max-h-[250px] overflow-y-auto space-y-2">
+      <div
+        className="max-h-[180px] sm:max-h-[220px] md:max-h-[250px] overflow-y-auto space-y-2"
+      >
         {platforms.map((p) => {
           const active = selected.includes(p.id);
 
@@ -39,13 +45,13 @@ export const PlatformsDropdown = ({ platforms, name }: Props) => {
               type="button"
               onClick={() => toggle(p.id)}
               className={cn(
-                "w-full flex items-center gap-3 px-4 py-2 rounded-lg border text-left",
+                "w-full flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2 rounded-lg border text-left text-sm sm:text-base",
                 active
                   ? "bg-black text-white"
                   : "bg-white hover:bg-gray-100"
               )}
             >
-              {active ? <Check size={18} /> : <span className="w-[18px]" />}
+              {active ? <Check size={16} /> : <span className="w-[16px]" />}
               {p.name}
             </button>
           );

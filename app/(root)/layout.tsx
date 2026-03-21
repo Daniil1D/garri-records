@@ -1,6 +1,4 @@
-import { SideMenu } from '@/shared/components/shared';
 import type { Metadata } from 'next';
-import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: 'yourtunes-clone',
@@ -14,8 +12,10 @@ export default function HomeLayout({
   modal: React.ReactNode;
 }>) {
   return (
-    <main className="">
-      {children}
+    <main className="min-h-screen flex flex-col">
+      <div className="flex-1">
+        {children}
+      </div>
       {modal}
     </main>
   );

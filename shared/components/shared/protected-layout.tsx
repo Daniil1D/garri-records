@@ -23,9 +23,17 @@ export const ProtectedLayout: React.FC<Props> = ({ children }) => {
   if (!session?.user?.id) return null;
 
   return (
-    <main className="flex min-h-screen">
-      <SideMenu />
-      <div className="flex-1">{children}</div>
+    <main
+      className="flex min-h-screen flex-col lg:flex-row">
+      <div
+        className="w-full lg:w-[260px] border-b lg:border-b-0 lg:border-r">
+        <SideMenu />
+      </div>
+
+      <div
+        className="flex-1 px-3 sm:px-4 md:px-6">
+        {children}
+      </div>
     </main>
   );
 };

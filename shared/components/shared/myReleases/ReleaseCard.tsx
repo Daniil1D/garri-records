@@ -55,12 +55,13 @@ export const ReleaseCard: React.FC<Props> = ({ id, title, status, coverUrl }) =>
   }
 
   return (
-    <div className="flex items-center gap-4 border rounded-2xl p-4 bg-white">
-      <div className="w-24 h-24 rounded-xl bg-gray-100 flex items-center justify-center">
+    <div className="flex flex-col sm:flex-row gap-4 border rounded-2xl p-4 bg-white">
+      
+      <div className="w-full sm:w-24 h-40 sm:h-24 rounded-xl bg-gray-100 flex items-center justify-center overflow-hidden">
         {coverUrl ? (
           <img src={coverUrl} className="w-full h-full object-cover" />
         ) : (
-          <div className="w-full h-full flex items-center justify-center">🎵</div>
+          <div className="flex items-center justify-center w-full h-full">🎵</div>
         )}
       </div>
 
@@ -68,13 +69,13 @@ export const ReleaseCard: React.FC<Props> = ({ id, title, status, coverUrl }) =>
         <span className="inline-block text-xs px-2 py-1 rounded-full bg-gray-100 mb-1">
           {statusMap[status]}
         </span>
-        <h3 className="text-xl font-bold">{title}</h3>
+        <h3 className="text-lg sm:text-xl font-bold break-words">{title}</h3>
       </div>
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col sm:flex-col gap-2 w-full sm:w-auto">
         <Button
           variant="secondary"
-          className="justify-start gap-2"
+          className="w-full sm:w-auto justify-center sm:justify-start gap-2"
           onClick={() => router.push(`/releases/${id}/edit`)}
         >
           <Pencil className="w-4 h-4" />
@@ -83,7 +84,11 @@ export const ReleaseCard: React.FC<Props> = ({ id, title, status, coverUrl }) =>
 
         <AlertDialog>
           <AlertDialogTrigger asChild>
-           <Button variant="secondary" className="justify-start gap-2" disabled={loading}>
+            <Button
+              variant="secondary"
+              className="w-full sm:w-auto justify-center sm:justify-start gap-2"
+              disabled={loading}
+            >
               {loading ? <Spinner /> : <Trash2 className="w-4 h-4" />}
               {loading ? 'Удаляем...' : 'Удалить'}
             </Button>
@@ -91,19 +96,14 @@ export const ReleaseCard: React.FC<Props> = ({ id, title, status, coverUrl }) =>
 
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>
-                Удалить релиз?
-              </AlertDialogTitle>
+              <AlertDialogTitle>Удалить релиз?</AlertDialogTitle>
               <AlertDialogDescription>
                 Релиз <b>«{title}»</b> будет удалён навсегда.
-                Это действие нельзя отменить.
               </AlertDialogDescription>
             </AlertDialogHeader>
 
             <AlertDialogFooter>
-              <AlertDialogCancel>
-                Отмена
-              </AlertDialogCancel>
+              <AlertDialogCancel>Отмена</AlertDialogCancel>
               <AlertDialogAction
                 onClick={onDelete}
                 className="bg-red-600 hover:bg-red-700"
@@ -117,7 +117,7 @@ export const ReleaseCard: React.FC<Props> = ({ id, title, status, coverUrl }) =>
 
         <Button
           variant="ghost"
-          className="justify-start gap-2"
+          className="w-full sm:w-auto justify-center sm:justify-start gap-2"
           onClick={() => router.push(`/releases/${id}`)}
         >
           Подробнее
@@ -127,4 +127,3 @@ export const ReleaseCard: React.FC<Props> = ({ id, title, status, coverUrl }) =>
     </div>
   )
 }
-

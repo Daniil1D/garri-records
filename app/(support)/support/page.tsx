@@ -3,7 +3,7 @@ import { SupportChatClient } from "@/shared/components/shared/support/SupportCha
 
 export default function SupportPage() {
   return (
-    <Container className="mt-10 space-y-6">
+    <Container className="space-y-6">
       <Title text="Поддержка" size="2xl" className="font-bold" />
 
       <SupportChatClient />

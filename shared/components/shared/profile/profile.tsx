@@ -14,7 +14,7 @@ export const Profile: React.FC<Props> = ({ data }) => {
   const [isEditing, setIsEditing] = useState(false);
 
   return (
-    <Container className="my-10 space-y-8">
+    <Container className="my-6 sm:my-8 lg:my-10 space-y-6 sm:space-y-8">
       <ProfileHeader
         user={data}
         isEditing={isEditing}

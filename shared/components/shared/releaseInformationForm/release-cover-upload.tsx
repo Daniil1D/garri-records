@@ -64,10 +64,8 @@ export const ReleaseCoverUpload = ({ releaseId }: { releaseId: string }) => {
     };
   };
 
-
   return (
-    <div className="space-y-4">
-
+    <div className="space-y-4 flex flex-col items-center md:items-start">
       <input
         type="file"
         accept="image/png, image/jpeg, image/jpg"
@@ -78,22 +76,30 @@ export const ReleaseCoverUpload = ({ releaseId }: { releaseId: string }) => {
 
       <label
         htmlFor="cover-upload"
-        className="cursor-pointer w-[200px] h-[200px] aspect-square rounded-2xl border bg-gray-50 flex flex-col items-center justify-center text-center px-6 hover:bg-gray-100 transition"
+        className="
+        cursor-pointer 
+        w-full max-w-[200px] 
+        aspect-square 
+        rounded-2xl border bg-gray-50 
+        flex flex-col items-center justify-center text-center 
+        px-4 sm:px-6 
+        hover:bg-gray-100 transition
+      "
       >
         {coverUrl ? (
           <img
             src={coverUrl}
             alt="Cover Preview"
-            className="w-[200px] h-[200px] object-cover rounded-2xl"
+            className="w-full h-full object-cover rounded-2xl"
           />
         ) : (
           <>
-            <h2 className="text-lg text-gray-500 leading-relaxed">
+            <h2 className="text-sm sm:text-base text-gray-500 leading-relaxed">
               Загрузите обложку
             </h2>
 
-            <div className=" rounded-xl bg-gray-100 flex items-center justify-center text-3xl mt-4">
-              <Plus/>
+            <div className="rounded-xl bg-gray-100 flex items-center justify-center text-2xl sm:text-3xl mt-4">
+              <Plus />
             </div>
           </>
         )}
@@ -120,4 +126,3 @@ export const ReleaseCoverUpload = ({ releaseId }: { releaseId: string }) => {
     </div>
   );
 };
-

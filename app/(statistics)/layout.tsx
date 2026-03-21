@@ -8,13 +8,13 @@ export const metadata: Metadata = {
 
 export default function CheckoutLayout({ children }: { children: React.ReactNode }) {
   return (
-    <main className="min-h-screen flex">
+    <main className="min-h-screen flex flex-col lg:flex-row">
       <Suspense>
-        <SideMenu />
+          <SideMenu />
       </Suspense>
 
-      <div className="flex-1 flex justify-center">
-        <div className="w-full max-w-5xl px-6">
+      <div className="flex-1 flex justify-center px-4 sm:px-6 lg:px-8 py-6">
+        <div className="w-full max-w-5xl">
           {children}
         </div>
       </div>
