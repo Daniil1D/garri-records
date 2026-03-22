@@ -33,7 +33,7 @@ export const TracklistClient = ({ tracks }: TracklistClientProps) => {
 
         if (!url) throw new Error("Нет URL");
 
-        await fetch("/api/tracks", {
+        await fetch("/api/tracks/upload", {
           method: "POST",
           body: JSON.stringify({
             audioUrl: url,
