@@ -8,6 +8,18 @@ const randomInt = (min: number, max: number) =>
 
 
 async function down() {
+
+  await prisma.user.updateMany({
+    where: {
+      avatarUrl: {
+        contains: "/uploads/",
+      },
+    },
+    data: {
+      avatarUrl: null,
+    },
+  });
+  
   await prisma.orderItem.deleteMany();
   await prisma.cartItem.deleteMany();
   await prisma.subscription.deleteMany();
