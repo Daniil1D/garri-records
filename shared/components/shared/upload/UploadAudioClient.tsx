@@ -1,64 +1,74 @@
 "use client";
 
 import { useRef, useState } from "react";
-import axios from "axios";
 import { Button } from "@/shared/components/ui/button";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
+// 🔥 ДОБАВЛЕНО
+import { useUploadThing } from "@/shared/lib/uploadthing";
+
 const MAX_SIZE_MB = 20;
-const REQUIRED_SAMPLE_RATE = 48000;
 
 export const UploadAudioClient = ({ releaseId }: { releaseId: string }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [files, setFiles] = useState<File[]>([]);
   const [loading, setLoading] = useState(false);
-  const [progress, setProgress] = useState(0);
   const router = useRouter();
 
-  const validateFileBasic = (file: File) => {
+  const { startUpload } = useUploadThing("audioUploader", {
+    onClientUploadComplete: async (res) => {
+      try {
+        const url = res?.[0]?.serverData?.url;
+
+        if (!url) throw new Error("Нет URL");
+
+        await fetch("/api/tracks/upload", {
+          method: "POST",
+          body: JSON.stringify({
+            audioUrl: url,
+            releaseId,
+          }),
+        });
+
+        toast.success("Трек загружен 🎵");
+        router.push(`/releases/${releaseId}/tracklist`);
+      } catch (err) {
+        console.error(err);
+        toast.error("Ошибка сохранения ❌");
+      }
+    },
+    onUploadError: (error: Error) => {
+      toast.error(`Ошибка загрузки: ${error.message}`);
+    },
+  });
+
+  const validateFile = (file: File) => {
     if (!file.name.endsWith(".wav") && !file.name.endsWith(".mp3")) {
-      throw new Error("Допустимы только WAV или MP3 файлы");
+      throw new Error("Только WAV или MP3");
     }
+
     const sizeMb = file.size / 1024 / 1024;
     if (sizeMb > MAX_SIZE_MB) {
-      throw new Error(`Максимальный размер файла ${MAX_SIZE_MB}MB`);
+      throw new Error(`Максимум ${MAX_SIZE_MB}MB`);
     }
   };
 
-  const validateSampleRate = async (file: File) => {
-    const arrayBuffer = await file.arrayBuffer();
-    const audioContext = new AudioContext();
-    const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-    if (audioBuffer.sampleRate !== REQUIRED_SAMPLE_RATE) {
-      throw new Error(
-        `Частота дискретизации должна быть ${REQUIRED_SAMPLE_RATE}Hz (текущая: ${audioBuffer.sampleRate})`,
-      );
-    }
-  };
+  const onFilesSelect = async (fileList: FileList | null) => {
+    if (!fileList) return;
 
-  const onFilesSelect = async (newFiles: FileList | null) => {
-    if (!newFiles) return;
+    const validFiles: File[] = [];
 
-    for (const file of Array.from(newFiles)) {
+    for (const file of Array.from(fileList)) {
       try {
-        validateFileBasic(file);
-        await validateSampleRate(file);
-        setFiles((prev) => [...prev, file]);
-      } catch (err: unknown) {
-
-        if (err instanceof Error) {
-          toast.error(err.message);
-        } else {
-          toast.error("Неизвестная ошибка при загрузке файла");
-        }
+        validateFile(file);
+        validFiles.push(file);
+      } catch (err: any) {
+        toast.error(err.message);
       }
     }
-  };
 
-  const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    onFilesSelect(e.dataTransfer.files);
+    setFiles(validFiles);
   };
 
   const uploadFiles = async () => {
@@ -67,66 +77,23 @@ export const UploadAudioClient = ({ releaseId }: { releaseId: string }) => {
       return;
     }
 
-    setLoading(true);
-    setProgress(0);
-
     try {
-      for (const file of files) {
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("releaseId", releaseId);
+      setLoading(true);
 
-        await axios.post("/api/upload/audio", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-          onUploadProgress: (event) => {
-            if (!event.total) return;
-            const percent = Math.round((event.loaded * 100) / event.total);
-            setProgress(percent);
-          },
-        });
-      }
+      // 🔥 UploadThing
+      await startUpload(files);
 
-      toast.success("Файлы загружены");
-      router.push(`/releases/${releaseId}/tracklist`);
       setFiles([]);
-      setProgress(0);
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        toast.error(err.message);
-      } else {
-        toast.error("Ошибка загрузки");
-      }
+    } catch (err) {
       console.error(err);
+      toast.error("Ошибка загрузки");
     } finally {
       setLoading(false);
     }
   };
 
-  const uploadLater = () => {
-    router.push(`/releases/${releaseId}/tracklist`);
-  };
-
   return (
     <div className="space-y-4 sm:space-y-6">
-
-      <div
-        onDrop={onDrop}
-        onDragOver={(e) => e.preventDefault()}
-        className="border-2 border-dashed rounded-2xl p-6 sm:p-8 md:p-10 text-center bg-gray-50">
-        <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-auto rounded-xl bg-gray-100 flex items-center justify-center text-2xl sm:text-3xl">
-          🎵
-        </div>
-
-        <p className="mt-3 sm:mt-4 font-medium text-sm sm:text-base">
-          Перетащите файлы сюда
-        </p>
-
-        <p className="text-xs sm:text-sm text-gray-500">
-          .wav / .mp3
-        </p>
-      </div>
 
       <input
         ref={inputRef}
@@ -153,25 +120,10 @@ export const UploadAudioClient = ({ releaseId }: { releaseId: string }) => {
         >
           {loading ? "Загружаем..." : "Загрузить"}
         </Button>
-
-        <Button
-          variant="outline"
-          className="w-full sm:w-auto"
-          onClick={uploadLater}
-        >
-          Загрузить позже
-        </Button>
       </div>
 
-      {loading && (
-        <div className="mt-2 space-y-1">
-          <progress className="w-full h-2" value={progress} max={100} />
-          <span className="text-xs sm:text-sm">{progress}%</span>
-        </div>
-      )}
-
       {files.length > 0 && (
-        <ul className="text-xs sm:text-sm text-gray-600 list-disc pl-5 break-words">
+        <ul className="text-sm text-gray-600 list-disc pl-5">
           {files.map((file) => (
             <li key={file.name}>{file.name}</li>
           ))}
@@ -180,4 +132,3 @@ export const UploadAudioClient = ({ releaseId }: { releaseId: string }) => {
     </div>
   );
 };
-
