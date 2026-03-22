@@ -10,6 +10,9 @@ interface Props {
   tracksCount: number;
   firstTrack?: {
     audioUrl?: string | null
+    audioFile?: {
+      url: string
+    }
   }
   releaseId: string
 }

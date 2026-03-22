@@ -4,47 +4,43 @@ import { autoPublishReleases } from "./release-auto-publish"
 export async function getTopReleases(genre?: string) {
   await autoPublishReleases()
 
-  const releases = await prisma.release.findMany({
+  const tracks = await prisma.track.findMany({
     where: {
-      status: "DISTRIBUTED",
-
-      ...(genre && { genre }),
+      release: {
+        status: "DISTRIBUTED",
+        ...(genre && { genre }),
+      },
     },
     include: {
-      cover: true,
-      artist: true,
-        tracks: {
-          take: 1,
-          include: {
-            audioFile: true,
-          },
+      audioFile: true,
+      release: {
+        include: {
+          artist: true,
+          cover: true,
         },
+      },
     },
     orderBy: {
-      playsCount: "desc",
+      createdAt: "desc",
     },
+    take: 20,
   })
 
-  await Promise.all(
-    releases.map((release, index) =>
-      prisma.release.update({
-        where: { id: release.id },
-        data: { chartPosition: index + 1 },
-      })
-    )
-  )
-
-  const releasesWithAudio = releases.map(release => ({
-    ...release,
-    tracks: release.tracks.map(track => ({
-      id: track.id,
-      title: track.title,
-      audioUrl: track.audioFile?.url ?? null,
-      duration: track.duration ?? null,
-      status: track.status,
-    })),
+  const result = tracks.map((track, index) => ({
+    id: track.id,
+    title: track.title,
+    artist: track.release.artist,
+    cover: track.release.cover,
+    tracks: [
+      {
+        id: track.id,
+        title: track.title,
+        audioUrl: track.audioFile?.url ?? null,
+        duration: track.duration ?? null,
+        status: track.status,
+      },
+    ],
   }))
 
-  return releasesWithAudio
+  return result
 }
-

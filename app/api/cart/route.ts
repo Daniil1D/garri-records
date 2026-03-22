@@ -29,12 +29,10 @@ export async function POST(req: NextRequest) {
 
   const { planId } = await req.json();
 
-  // Удаляем ВСЁ из корзины
   await prisma.cartItem.deleteMany({
     where: { userId: session.id },
   });
 
-  // Добавляем ОДИН тариф
   await prisma.cartItem.create({
     data: {
       userId: session.id,

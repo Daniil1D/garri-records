@@ -126,6 +126,14 @@ export const UploadAudioClient = ({ releaseId }: { releaseId: string }) => {
         >
           {loading ? "Загружаем..." : "Загрузить"}
         </Button>
+
+        <Button
+          variant="outline"
+          className="w-full sm:w-auto"
+          onClick={() => router.push(`/releases/${releaseId}/tracklist`)}
+        >
+          Загрузить позже
+        </Button>
       </div>
 
       {files.length > 0 && (
