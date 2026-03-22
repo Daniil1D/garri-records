@@ -17,19 +17,27 @@ export const UploadAudioClient = ({ releaseId }: { releaseId: string }) => {
   const router = useRouter();
 
   const { startUpload } = useUploadThing("audioUploader", {
-    onClientUploadComplete: async (res) => {
+    onClientUploadComplete: async (uploadRes) => {
       try {
-        const url = res?.[0]?.serverData?.url;
+        const url = uploadRes?.[0]?.serverData?.url;
 
         if (!url) throw new Error("Нет URL");
 
-        await fetch("/api/tracks/upload", {
-          method: "POST",
-          body: JSON.stringify({
-            audioUrl: url,
-            releaseId,
-          }),
-        });
+       const response = await fetch("/api/tracks/upload", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json", // 🔥 ДОБАВЛЕНО
+        },
+        body: JSON.stringify({
+          audioUrl: url,
+          releaseId,
+        }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error?.error || "Ошибка создания трека");
+      }
 
         toast.success("Трек загружен 🎵");
         router.push(`/releases/${releaseId}/tracklist`);

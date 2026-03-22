@@ -27,19 +27,27 @@ export const TracklistClient = ({ tracks }: TracklistClientProps) => {
   const [loading, setLoading] = useState(false);
 
   const { startUpload } = useUploadThing("audioUploader", {
-    onClientUploadComplete: async (res) => {
+    onClientUploadComplete: async (uploadRes) => {
       try {
-        const url = res?.[0]?.serverData?.url;
+        const url = uploadRes?.[0]?.serverData?.url;
 
         if (!url) throw new Error("Нет URL");
 
-        await fetch("/api/tracks/upload", {
+        const response = await fetch("/api/tracks/upload", {
           method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify({
             audioUrl: url,
             releaseId: tracks[0]?.releaseId,
           }),
         });
+
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error?.error || "Ошибка создания трека");
+        }
 
         toast.success("Трек добавлен 🎵");
         router.refresh();
@@ -64,9 +72,7 @@ export const TracklistClient = ({ tracks }: TracklistClientProps) => {
 
     try {
       setLoading(true);
-
       await startUpload([file]);
-
     } catch (err) {
       toast.error("Ошибка загрузки трека");
       console.error(err);
