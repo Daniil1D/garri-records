@@ -6,7 +6,6 @@ export const getSupportMessages = async () => {
     return data.messages;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
-      console.log("Support GET error:", error.response?.status);
 
       if (error.response?.status === 401) {
         return [];

@@ -4,17 +4,14 @@ import { prisma } from "@/prisma/prisma-client";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    console.log("YOOKASSA WEBHOOK:", JSON.stringify(body, null, 2));
 
     if (body.event !== "payment.succeeded") {
-      console.log("Skipping event:", body.event);
       return NextResponse.json({ ok: true });
     }
 
     const payment = body.object;
 
     if (!payment?.id) {
-      console.error("No payment ID in webhook");
       return NextResponse.json({ error: "Invalid webhook" }, { status: 400 });
     }
 
@@ -23,10 +20,8 @@ export async function POST(req: NextRequest) {
       include: { items: true },
     });
 
-    console.log("Found order:", order);
 
     if (!order) {
-      console.log("Order not found for payment:", payment.id);
       return NextResponse.json({ error: "Order not found" }, { status: 404 });
     }
 
@@ -36,7 +31,6 @@ export async function POST(req: NextRequest) {
 
     await prisma.$transaction(async (tx) => {
       if (order.type === "BALANCE_TOPUP") {
-        console.log("Balance top up:", order.total);
 
         await tx.user.update({
           where: { id: order.userId },
@@ -96,7 +90,6 @@ export async function POST(req: NextRequest) {
       });
     });
 
-    console.log("YOOKASSA WEBHOOK OK:", order.id);
 
     return NextResponse.json({ success: true });
   } catch (error) {

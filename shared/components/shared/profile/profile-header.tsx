@@ -23,8 +23,6 @@ export const ProfileHeader = ({ user, isEditing, setIsEditing }: Props) => {
       try {
         const url = res?.[0]?.serverData?.url;
 
-        console.log("SAVING URL:", url);
-
         if (!url) throw new Error("Нет URL");
 
         await axios.patch("/api/users/avatar", {

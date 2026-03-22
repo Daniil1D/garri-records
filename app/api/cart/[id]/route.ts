@@ -25,7 +25,6 @@ export async function PATCH(
 
     return NextResponse.json(updatedCart);
   } catch (e) {
-    console.log('[CART_PATCH]', e);
     return NextResponse.json({ message: 'Error' }, { status: 500 });
   }
 }
