@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'yourtunes-clone',
+  title: 'garri-records',
 };
 
 export default function HomeLayout({

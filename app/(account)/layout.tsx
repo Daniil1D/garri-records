@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {
-  title: "yourtunes-clone",
+  title: "garri-records",
 };
 
 export default function CheckoutLayout({

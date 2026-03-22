@@ -4,7 +4,7 @@ import { Suspense } from 'react';
 import { PlayerUI } from "@/shared/components/shared/player/player-ui";
 
 export const metadata: Metadata = {
-  title: 'yourtunes-clone',
+  title: 'garri-records',
 };
 
 export default function CheckoutLayout({ children }: { children: React.ReactNode }) {

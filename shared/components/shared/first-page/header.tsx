@@ -11,7 +11,7 @@ export const Header: React.FC = () => {
 
       <div className="flex items-center justify-between py-4 md:py-5 p-6">
 
-        <Title text="YourTunes-clone" size="lg" />
+        <Title text="Garri Records" size="lg" />
 
         <nav className="hidden md:flex items-center gap-6 lg:gap-10 text-base lg:text-xl font-semibold">
           <Link href="/" className="text-gray-700 hover:text-black transition">
