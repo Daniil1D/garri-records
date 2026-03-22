@@ -31,11 +31,11 @@ export const ProfileHeader = ({ user, isEditing, setIsEditing }: Props) => {
           avatarUrl: url,
         });
 
-        toast.success("Аватар обновлён ✅");
+        toast.success("Аватар обновлён");
         router.refresh();
       } catch (error) {
         console.error(error);
-        toast.error("Ошибка сохранения ❌");
+        toast.error("Ошибка сохранения");
       }
     },
     onUploadError: (error: Error) => {

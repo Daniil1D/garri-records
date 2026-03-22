@@ -19,7 +19,6 @@ export async function PATCH(req: Request) {
       data: {
         title,
 
-        // ✅ обновляем имя артиста через relation
         artist: {
           update: {
             name: artistName,

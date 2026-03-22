@@ -1,5 +1,3 @@
-// 📁 shared/components/.../ReleaseDetailsServer.tsx
-
 import { prisma } from "@/prisma/prisma-client";
 import { Container, Title } from "@/shared/components/shared";
 

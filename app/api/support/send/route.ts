@@ -45,7 +45,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Empty message" }, { status: 400 });
     }
 
-    // Находим чат пользователя или создаём новый
     let chat = await prisma.supportChat.findFirst({
       where: { userId: session.id },
     });
@@ -58,7 +57,6 @@ export async function POST(req: Request) {
       });
     }
 
-    // Сохраняем сообщение пользователя
     const userMessage = await prisma.supportMessage.create({
       data: {
         chatId: chat.id,
@@ -77,7 +75,6 @@ export async function POST(req: Request) {
       },
     });
 
-    // Возвращаем сообщения
     return NextResponse.json({
       userMessage,
       botMessage,

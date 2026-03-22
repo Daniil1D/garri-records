@@ -41,16 +41,7 @@ export const HowItWorksSection: React.FC = () => {
         {steps.map((step, index) => (
           <div
             key={index}
-            className="
-            sticky
-            top-20
-            bg-white
-            rounded-3xl
-            shadow-xl
-            p-6
-            md:p-10
-          "
-          >
+            className=" sticky top-20 bg-white rounded-3xl shadow-xl p-6 md:p-10">
             <div className="flex items-center justify-between gap-4">
 
               <Title text={step.title} size="2xl" className="font-black" />

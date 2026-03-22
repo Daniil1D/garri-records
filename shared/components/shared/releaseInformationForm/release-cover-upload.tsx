@@ -1,5 +1,3 @@
-// 📁 shared/components/shared/releaseInformationForm/release-cover-upload.tsx
-
 "use client";
 
 import React from "react";

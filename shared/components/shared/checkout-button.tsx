@@ -46,7 +46,7 @@ export const CheckoutButton: React.FC = () => {
       ) : (
         <>
           <CreditCard className="w-4 h-4" />
-          Оплатить через ЮKassa
+          Оплатить по карте
         </>
       )}
     </Button>

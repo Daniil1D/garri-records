@@ -49,10 +49,6 @@ export const Footer: React.FC = () => {
 
           <div className="flex flex-col lg:items-end gap-6">
 
-            <p className="text-sm md:text-lg opacity-80 text-left lg:text-right">
-              📍 г. Москва, Пресненская наб., д. 10 стр. 2, этаж 11 пом.97
-            </p>
-
             <div className="flex gap-4">
               {socials.map((social, index) => (
                 <SocialButton key={index} href={social.href}>

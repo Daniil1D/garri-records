@@ -20,12 +20,10 @@ export default async function CategoryPage({
   return (
     <div className="max-w-6xl mx-auto py-16 px-6">
 
-      {/* TITLE */}
       <h1 className="text-4xl font-black mb-10">
         {category.title}
       </h1>
 
-      {/* ARTICLES GRID */}
       <div className="grid md:grid-cols-2 gap-6">
 
         {category.articles.map((article) => (
@@ -33,19 +31,7 @@ export default async function CategoryPage({
           <Link
             key={article.slug}
             href={`/faq/${category.id}/${article.slug}`}
-            className="
-              bg-gray-100
-              p-6
-              rounded-2xl
-              hover:bg-gray-200
-              transition
-              flex
-              flex-col
-              justify-between
-              min-h-[150px]
-            "
-
-          >
+            className="bg-gray-100 p-6 rounded-2xl  hover:bg-gray-200 transition flex flex-col justify-between min-h-[150px]">
 
             <p className="font-semibold text-lg">
               {article.title}

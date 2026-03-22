@@ -40,7 +40,7 @@ export function ProfileEditForm({ user, setIsEditing }: Props) {
         password: values.password,
       });
 
-      toast.success("Данные обновлены 📝");
+      toast.success("Данные обновлены");
       setIsEditing(false);
     } catch {
       toast.error("Ошибка при обновлении ❌");
@@ -78,7 +78,7 @@ export function ProfileEditForm({ user, setIsEditing }: Props) {
         <div className="flex flex-col sm:flex-row justify-center gap-4 mt-8 sm:mt-10">
           <Button
             disabled={form.formState.isSubmitting}
-            className="text-base w-full sm:min-w-[180px]"
+            className="text-base w-full sm:w-auto sm:min-w-[180px]"
             type="submit"
           >
             Сохранить
@@ -88,7 +88,7 @@ export function ProfileEditForm({ user, setIsEditing }: Props) {
             onClick={onClickSignOut}
             variant="secondary"
             disabled={form.formState.isSubmitting}
-            className="text-base w-full sm:min-w-[180px]"
+            className="text-base w-full sm:w-auto sm:min-w-[180px]"
             type="button"
           >
             Выйти

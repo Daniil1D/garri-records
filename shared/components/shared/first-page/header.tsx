@@ -35,23 +35,7 @@ export const Header: React.FC = () => {
 
         <Link href="/login">
           <Button
-            className="
-            rounded-full
-            border-2
-            border-black
-            bg-transparent
-            h-[40px]
-            md:h-[44px]
-            px-5
-            md:px-6
-            text-sm
-            md:text-base
-            text-black
-            hover:bg-black
-            hover:text-white
-            transition
-          "
-          >
+            className=" rounded-full border-2 border-black bg-transparent h-[40px] md:h-[44px] px-5 md:px-6 text-sm md:text-base text-black hover:bg-black hover:text-white transition">
             Войти
           </Button>
         </Link>

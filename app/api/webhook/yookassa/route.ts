@@ -11,7 +11,6 @@ export async function POST(req: NextRequest) {
 
     const payment = body.object;
 
-    // ищем заказ по paymentId
     const order = await prisma.order.findFirst({
       where: { paymentId: payment.id },
       include: { items: true },
@@ -27,11 +26,9 @@ export async function POST(req: NextRequest) {
     }
 
     await prisma.$transaction(async (tx) => {
-      // Пополнение баланса
       if (order.type === "BALANCE_TOPUP") {
-        console.log("💰 Balance top up:", order.total);
+        console.log("Balance top up:", order.total);
 
-        // увеличиваем баланс
         await tx.user.update({
           where: { id: order.userId },
           data: {
@@ -41,7 +38,6 @@ export async function POST(req: NextRequest) {
           },
         });
 
-        // ДОБАВЛЯЕМ транзакцию в историю
         await tx.transaction.create({
           data: {
             userId: order.userId,
@@ -51,7 +47,6 @@ export async function POST(req: NextRequest) {
         });
       }
 
-      // Подписка
       if (order.type === "SUBSCRIPTION") {
         const expiresAt = new Date();
         expiresAt.setDate(expiresAt.getDate() + 30);
@@ -84,7 +79,6 @@ export async function POST(req: NextRequest) {
         });
       }
 
-      // Заказ отмечаем как оплаченный
       await tx.order.update({
         where: { id: order.id },
         data: {
