@@ -11,10 +11,11 @@ import { ReleaseMainFields } from "./release-main-fields";
 import { ReleaseCopyrightForm } from "./release-copyright-form";
 import { ReleaseArtistsForm } from "./release-artists-form";
 import { ReleasePublishDateForm } from "./release-publish-date-form";
+import { ReleaseWithTracks } from "@/shared/types/release-with-tracks";
 
 interface Props {
   releaseId: string;
-  release: any;
+  release: ReleaseWithTracks;
 }
 
 type ReleaseInfoFormValues = {
@@ -54,7 +55,7 @@ export const ReleaseInformationForm: React.FC<Props> = ({
     try {
       await saveReleaseInformation(releaseId, data);
       toast.success("Информация о релизе сохранена");
-      toast.success("Релиз опубликован 🎉");
+      toast.success("Релиз опубликован");
       router.push("/releases");
     } catch (e) {
       console.error(e);
