@@ -6,9 +6,16 @@ export const ourFileRouter = {
   imageUploader: f({
     image: { maxFileSize: "4MB" },
   }).onUploadComplete(async ({ file }) => {
-
     return {
-      url: file.ufsUrl
+      url: file.ufsUrl,
+    };
+  }),
+
+  audioUploader: f({
+    audio: { maxFileSize: "32MB" },
+  }).onUploadComplete(async ({ file }) => {
+    return {
+      url: file.ufsUrl,
     };
   }),
 } satisfies FileRouter;
