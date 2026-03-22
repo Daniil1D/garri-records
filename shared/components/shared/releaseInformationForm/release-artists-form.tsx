@@ -1,10 +1,9 @@
 "use client";
 
 import { FormInput } from "@/shared/components/shared/form/form-input";
-import { ReleaseWithTracks } from "@/shared/types/release-with-tracks";
 
 interface Props {
-  release: ReleaseWithTracks;
+  release: any;
 }
 
 export const ReleaseArtistsForm = ({ release }: Props) => {
@@ -21,7 +20,7 @@ export const ReleaseArtistsForm = ({ release }: Props) => {
 
       <FormInput
         name="artist"
-        defaultValue={firstArtist?.name ?? ""} 
+        defaultValue={firstArtist?.name || ""} 
         placeholder="Название артиста"
         disabled
       />

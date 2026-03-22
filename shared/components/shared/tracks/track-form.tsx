@@ -21,8 +21,8 @@ import {
   AlertDialogAction,
   Button,
 } from "@/shared/components/ui";
+
 import { deleteTrack, updateTrack } from "@/app/actions/index";
-import { TrackFormValues } from "@/shared/types/track-form-values";
 
 type TrackWithRelations = Prisma.TrackGetPayload<{
   include: {
@@ -41,17 +41,17 @@ export const TrackForm: React.FC<TrackFormProps> = ({ track, onCompleted }) => {
   const router = useRouter();
   const [isCompleted, setIsCompleted] = useState(false);
 
-  const methods = useForm<TrackFormValues>({
+  const methods = useForm({
     mode: "onChange",
     defaultValues: {
       title: track.title,
-      artistName: track.artists?.[0]?.name ?? "",
+      artistName: track.artists?.[0]?.name || "",
     },
   });
 
   const { handleSubmit, formState } = methods;
 
-  const onSubmit = async (data: TrackFormValues) => {
+  const onSubmit = async (data: any) => {
     const toastId = toast.loading("Сохраняем...");
 
     try {
