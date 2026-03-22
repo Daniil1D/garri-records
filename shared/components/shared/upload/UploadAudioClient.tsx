@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 import { useUploadThing } from "@/shared/lib/uploadthing";
+import axios from "axios";
 
 const MAX_SIZE_MB = 20;
 
@@ -22,21 +23,10 @@ export const UploadAudioClient = ({ releaseId }: { releaseId: string }) => {
 
         if (!url) throw new Error("Нет URL");
 
-       const response = await fetch("/api/tracks/upload", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+        await axios.post("/api/tracks/upload", {
           audioUrl: url,
           releaseId,
-        }),
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error?.error || "Ошибка создания трека");
-      }
+        });
 
         toast.success("Трек загружен 🎵");
         router.push(`/releases/${releaseId}/tracklist`);

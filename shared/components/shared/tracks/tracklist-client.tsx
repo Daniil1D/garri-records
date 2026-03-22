@@ -7,6 +7,7 @@ import { Prisma } from "@prisma/client";
 import { TrackForm } from "./track-form";
 import { TracklistActions } from "./tracklist-actions";
 import { useUploadThing } from "@/shared/lib/uploadthing";
+import axios from "axios";
 
 type TrackWithRelations = Prisma.TrackGetPayload<{
   include: {
@@ -33,21 +34,10 @@ export const TracklistClient = ({ tracks }: TracklistClientProps) => {
 
         if (!url) throw new Error("Нет URL");
 
-        const response = await fetch("/api/tracks/upload", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            audioUrl: url,
-            releaseId: tracks[0]?.releaseId,
-          }),
+        await axios.post("/api/tracks/upload", {
+          audioUrl: url,
+          releaseId: tracks[0]?.releaseId,
         });
-
-        if (!response.ok) {
-          const error = await response.json();
-          throw new Error(error?.error || "Ошибка создания трека");
-        }
 
         toast.success("Трек добавлен 🎵");
         router.refresh();
