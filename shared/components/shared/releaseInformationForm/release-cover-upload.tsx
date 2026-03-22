@@ -10,13 +10,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/shared/components/ui";
-
 import { uploadCover } from "@/app/actions/index";
-import { useReleaseStore } from "@/shared/store/release-store";
 import { Plus } from "lucide-react";
-
-import { UploadButton } from "@uploadthing/react";
-import type { OurFileRouter } from "@/app/api/uploadthing/route";
+import { useReleaseStore } from "@/shared/store/release-store";
+import axios from "axios";
 
 export const ReleaseCoverUpload = ({ releaseId }: { releaseId: string }) => {
   const coverUrl = useReleaseStore((s) => s.release.cover);
@@ -25,36 +22,69 @@ export const ReleaseCoverUpload = ({ releaseId }: { releaseId: string }) => {
 
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
+  const handleCoverUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const img = new Image();
+    const objectUrl = URL.createObjectURL(file);
+
+    img.src = objectUrl;
+
+    img.onload = async () => {
+      if (img.width !== 1024 || img.height !== 1024) {
+        setIsModalOpen(true);
+        URL.revokeObjectURL(objectUrl);
+        return;
+      }
+
+      try {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        const { data } = await axios.post("/api/upload/cover", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        await uploadCover(releaseId, data.url, file.size, file.type);
+
+        setRelease({
+          ...release,
+          cover: data.url,
+        });
+      } catch (error) {
+        console.error("Ошибка загрузки обложки:", error);
+      } finally {
+        URL.revokeObjectURL(objectUrl);
+      }
+    };
+  };
+
   return (
     <div className="space-y-4 flex flex-col items-center md:items-start">
-      
-      <UploadButton<OurFileRouter, "imageUploader">
-        endpoint="imageUploader"
-
-        onClientUploadComplete={async (res) => {
-          const url = res[0].url;
-
-          await uploadCover(releaseId, url, 0, "image/jpeg");
-
-          setRelease({
-            ...release,
-            cover: url,
-          });
-        }}
-
-        onUploadError={(error) => {
-          console.error(error);
-        }}
+      <input
+        type="file"
+        accept="image/png, image/jpeg, image/jpg"
+        id="cover-upload"
+        className="hidden"
+        onChange={handleCoverUpload}
       />
 
-      <div
+      <label
+        htmlFor="cover-upload"
         className="
-          w-full max-w-[200px] 
-          aspect-square 
-          rounded-2xl border bg-gray-50 
-          flex flex-col items-center justify-center text-center 
-          px-4 sm:px-6 
-        "
+        cursor-pointer 
+        w-full max-w-[200px] 
+        aspect-square 
+        rounded-2xl border bg-gray-50 
+        flex flex-col items-center justify-center text-center 
+        px-4 sm:px-6 
+        hover:bg-gray-100 transition
+      "
       >
         {coverUrl ? (
           <img
@@ -73,7 +103,7 @@ export const ReleaseCoverUpload = ({ releaseId }: { releaseId: string }) => {
             </div>
           </>
         )}
-      </div>
+      </label>
 
       <AlertDialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <AlertDialogContent>
@@ -82,13 +112,13 @@ export const ReleaseCoverUpload = ({ releaseId }: { releaseId: string }) => {
             <AlertDialogDescription>
               Обложка должна быть квадратной!
               <br />
-              Размер изображения: <b>1024×1024</b>
+              Размер изображения: <b>1024×1024</b> пикселей
             </AlertDialogDescription>
           </AlertDialogHeader>
 
           <AlertDialogFooter>
             <AlertDialogAction onClick={() => setIsModalOpen(false)}>
-              Ок
+              Ок, загружу другой файл
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

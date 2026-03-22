@@ -76,7 +76,7 @@ export const UploadAudioClient = ({ releaseId }: { releaseId: string }) => {
         formData.append("file", file);
         formData.append("releaseId", releaseId);
 
-        await axios.post("/api/uploadthing", formData, {
+        await axios.post("/api/upload/audio", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -180,3 +180,4 @@ export const UploadAudioClient = ({ releaseId }: { releaseId: string }) => {
     </div>
   );
 };
+
