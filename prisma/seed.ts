@@ -1,11 +1,8 @@
 import { hashSync } from 'bcrypt'
 import { prisma } from "./prisma-client";
 
-
 const randomInt = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min + 1)) + min
-
-
 
 async function down() {
 
@@ -19,7 +16,7 @@ async function down() {
       avatarUrl: null,
     },
   });
-  
+
   await prisma.orderItem.deleteMany();
   await prisma.cartItem.deleteMany();
   await prisma.subscription.deleteMany();
