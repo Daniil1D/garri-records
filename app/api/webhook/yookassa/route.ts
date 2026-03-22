@@ -4,17 +4,26 @@ import { prisma } from "@/prisma/prisma-client";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
+    console.log("YOOKASSA WEBHOOK:", JSON.stringify(body, null, 2));
 
     if (body.event !== "payment.succeeded") {
+      console.log("Skipping event:", body.event);
       return NextResponse.json({ ok: true });
     }
 
     const payment = body.object;
 
+    if (!payment?.id) {
+      console.error("No payment ID in webhook");
+      return NextResponse.json({ error: "Invalid webhook" }, { status: 400 });
+    }
+
     const order = await prisma.order.findFirst({
       where: { paymentId: payment.id },
       include: { items: true },
     });
+
+    console.log("Found order:", order);
 
     if (!order) {
       console.log("Order not found for payment:", payment.id);
