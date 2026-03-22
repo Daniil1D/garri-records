@@ -209,9 +209,9 @@ Apple Music усилил требования к релизам.
     articles: [
       {
         slug: "tariffs",
-        title: "Тарифы Yourtunes",
+        title: "Тарифы Gerri records",
         content: `
-YourTunes предлагает несколько тарифов.
+Gerri records предлагает несколько тарифов.
 
 Они отличаются:
 

@@ -13,7 +13,7 @@ export async function getAIResponse(message: string) {
       {
         role: "system",
         content: `
-        Ты служба поддержки сервиса YourTunes.
+        Ты служба поддержки сервиса Gerri records.
         Используй ТОЛЬКО информацию ниже.
         Если ответа нет в базе знаний — скажи, что уточнишь.
 

@@ -37,10 +37,8 @@ export const Footer: React.FC = () => {
     <footer className="mt-10 px-4 md:px-6">
       <div className="rounded-[40px] md:rounded-[60px] p-8 md:p-12 lg:p-16 text-white bg-gradient-to-r from-[#0f0f10] via-[#1b1b1d] to-[#2a1d33]">
 
-        {/* Верхний блок */}
         <div className="flex flex-col lg:flex-row gap-10 lg:justify-between">
 
-          {/* Меню */}
           <nav className="flex flex-wrap gap-6 text-xl md:text-2xl font-semibold">
             {navItems.map((item) => (
               <Link key={item.label} href={item.href}>
@@ -49,7 +47,6 @@ export const Footer: React.FC = () => {
             ))}
           </nav>
 
-          {/* Адрес + соцсети */}
           <div className="flex flex-col lg:items-end gap-6">
 
             <p className="text-sm md:text-lg opacity-80 text-left lg:text-right">
@@ -67,7 +64,6 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Кнопки */}
         <div className="flex flex-col sm:flex-row gap-4 mt-10">
           {buttons.map((button) => (
             <Link
@@ -80,10 +76,9 @@ export const Footer: React.FC = () => {
           ))}
         </div>
 
-        {/* Нижняя строка */}
         <div className="flex flex-col md:flex-row gap-4 md:justify-between mt-12 text-sm opacity-80">
 
-          <p>© 2026, YOURTUNES</p>
+          <p>© 2026, Gerri records</p>
 
           <div className="flex gap-6">
             <Link href="#">Публичная оферта</Link>
