@@ -13,6 +13,9 @@ export default async function InformationReleasePage({ params }: PageProps) {
   const release = await prisma.release.findUnique({
     where: { id: releaseId },
     include: {
+      label: true,
+      artist: true,
+      cover: true,
       tracks: {
         include: {
           artists: true,
@@ -21,6 +24,10 @@ export default async function InformationReleasePage({ params }: PageProps) {
       },
     },
   });
+  
+  if (!release) {
+    throw new Error("Release not found");
+  }
 
   return (
     <Container
