@@ -58,7 +58,11 @@ export const ProfileHeader = ({ user, isEditing, setIsEditing }: Props) => {
             endpoint="imageUploader"
             onClientUploadComplete={async (res: { url: string }[]) => {
               try {
+                console.log("CLIENT UPLOAD RES:", res);
+
                 const url = res?.[0]?.url as string;
+
+                console.log("SAVING URL:", url);
 
                 if (!url) throw new Error("Нет URL");
 
