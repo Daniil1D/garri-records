@@ -1,3 +1,5 @@
+// 📁 shared/components/shared/releaseInformationForm/release-cover-upload.tsx
+
 "use client";
 
 import React from "react";
@@ -13,7 +15,7 @@ import {
 import { uploadCover } from "@/app/actions/index";
 import { Plus } from "lucide-react";
 import { useReleaseStore } from "@/shared/store/release-store";
-import axios from "axios";
+import { useUploadThing } from "@/shared/lib/uploadthing";
 
 export const ReleaseCoverUpload = ({ releaseId }: { releaseId: string }) => {
   const coverUrl = useReleaseStore((s) => s.release.cover);
@@ -21,6 +23,25 @@ export const ReleaseCoverUpload = ({ releaseId }: { releaseId: string }) => {
   const release = useReleaseStore((s) => s.release);
 
   const [isModalOpen, setIsModalOpen] = React.useState(false);
+
+  const { startUpload } = useUploadThing("imageUploader", {
+    onClientUploadComplete: async (res) => {
+      try {
+        const url = res?.[0]?.serverData?.url;
+
+        if (!url) throw new Error("Нет URL");
+
+        await uploadCover(releaseId, url, 0, "image/jpeg");
+
+        setRelease({
+          ...release,
+          cover: url,
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    },
+  });
 
   const handleCoverUpload = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -41,21 +62,7 @@ export const ReleaseCoverUpload = ({ releaseId }: { releaseId: string }) => {
       }
 
       try {
-        const formData = new FormData();
-        formData.append("file", file);
-
-        const { data } = await axios.post("/api/upload/cover", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-
-        await uploadCover(releaseId, data.url, file.size, file.type);
-
-        setRelease({
-          ...release,
-          cover: data.url,
-        });
+        await startUpload([file]);
       } catch (error) {
         console.error("Ошибка загрузки обложки:", error);
       } finally {
@@ -76,15 +83,7 @@ export const ReleaseCoverUpload = ({ releaseId }: { releaseId: string }) => {
 
       <label
         htmlFor="cover-upload"
-        className="
-        cursor-pointer 
-        w-full max-w-[200px] 
-        aspect-square 
-        rounded-2xl border bg-gray-50 
-        flex flex-col items-center justify-center text-center 
-        px-4 sm:px-6 
-        hover:bg-gray-100 transition
-      "
+        className="cursor-pointer w-full max-w-[200px] aspect-square rounded-2xl border bg-gray-50 flex flex-col items-center justify-center text-center px-4 sm:px-6 hover:bg-gray-100 transition"
       >
         {coverUrl ? (
           <img

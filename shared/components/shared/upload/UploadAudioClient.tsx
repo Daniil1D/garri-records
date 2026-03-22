@@ -5,7 +5,6 @@ import { Button } from "@/shared/components/ui/button";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
-// 🔥 ДОБАВЛЕНО
 import { useUploadThing } from "@/shared/lib/uploadthing";
 
 const MAX_SIZE_MB = 20;
@@ -26,7 +25,7 @@ export const UploadAudioClient = ({ releaseId }: { releaseId: string }) => {
        const response = await fetch("/api/tracks/upload", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json", // 🔥 ДОБАВЛЕНО
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           audioUrl: url,
@@ -88,7 +87,6 @@ export const UploadAudioClient = ({ releaseId }: { releaseId: string }) => {
     try {
       setLoading(true);
 
-      // 🔥 UploadThing
       await startUpload(files);
 
       setFiles([]);
